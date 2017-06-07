@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>lhnows&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="这一个多月的时间一直忙着写程序，做论文，都没来得及更新博客，当时定下的伟大目标——每周一篇——就这样一溜烟的随着时间的缝隙划过，又留下我低徊忏悔。这是2015年的第一篇博文，希望自己继续坚持下去。回头看看之前写得博文，回忆渐渐涌上心头啊…… 回顾了下之前的OpenCV博文，这次用Qt简单做了个界面程序（且给个名字zximage），关于在Qt中集成OpenCV在搭建Qt界面的OpenCV开发环">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lhnows&#39;s blog">
+<meta property="og:url" content="http://lhnows.github.io/2016/01/27/OpenCV集成到Qt的尝试-zximage/index.html">
+<meta property="og:site_name" content="lhnows&#39;s blog">
+<meta property="og:description" content="这一个多月的时间一直忙着写程序，做论文，都没来得及更新博客，当时定下的伟大目标——每周一篇——就这样一溜烟的随着时间的缝隙划过，又留下我低徊忏悔。这是2015年的第一篇博文，希望自己继续坚持下去。回头看看之前写得博文，回忆渐渐涌上心头啊…… 回顾了下之前的OpenCV博文，这次用Qt简单做了个界面程序（且给个名字zximage），关于在Qt中集成OpenCV在搭建Qt界面的OpenCV开发环">
+<meta property="og:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV集成到Qt的尝试-zximage/界面介绍.png">
+<meta property="og:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV集成到Qt的尝试-zximage/滤波器的美化——磨皮.png">
+<meta property="og:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV集成到Qt的尝试-zximage/幂次变换调对比度.png">
+<meta property="og:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV集成到Qt的尝试-zximage/边缘检测.png">
+<meta property="og:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV集成到Qt的尝试-zximage/Hough直线检测.png">
+<meta property="og:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV集成到Qt的尝试-zximage/形态学操作.png">
+<meta property="og:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV集成到Qt的尝试-zximage/直方图及其均衡化.png">
+<meta property="og:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV集成到Qt的尝试-zximage/人脸检测.png">
+<meta property="og:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV集成到Qt的尝试-zximage/软件自拍-鸡生蛋蛋生鸡.png">
+<meta property="og:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV集成到Qt的尝试-zximage/摄像头拍到的帅锅师兄.png">
+<meta property="og:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV集成到Qt的尝试-zximage/zximage摄像头自拍人脸识别.png">
+<meta property="og:updated_time" content="2016-01-27T10:29:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="lhnows&#39;s blog">
+<meta name="twitter:description" content="这一个多月的时间一直忙着写程序，做论文，都没来得及更新博客，当时定下的伟大目标——每周一篇——就这样一溜烟的随着时间的缝隙划过，又留下我低徊忏悔。这是2015年的第一篇博文，希望自己继续坚持下去。回头看看之前写得博文，回忆渐渐涌上心头啊…… 回顾了下之前的OpenCV博文，这次用Qt简单做了个界面程序（且给个名字zximage），关于在Qt中集成OpenCV在搭建Qt界面的OpenCV开发环">
+<meta name="twitter:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV集成到Qt的尝试-zximage/界面介绍.png">
+  
+    <link rel="alternate" href="/atom.xml" title="lhnows&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">lhnows&#39;s blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">lhnows</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://lhnows.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-OpenCV集成到Qt的尝试-zximage" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/01/27/OpenCV集成到Qt的尝试-zximage/" class="article-date">
+  <time datetime="2016-01-27T10:29:30.000Z" itemprop="datePublished">2016-01-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!---title:OpenCV集成到Qt的尝试-zximage-->
+<!---keywords:OpenCV,Qt,zximage-->
+<!---date:2015-01-14-->
+<p>这一个多月的时间一直忙着写程序，做论文，都没来得及更新博客，当时定下的伟大目标——每周一篇——就这样一溜烟的随着时间的缝隙划过，又留下我低徊忏悔。这是2015年的第一篇博文，希望自己继续坚持下去。回头看看之前写得博文，回忆渐渐涌上心头啊……</p>
+<p>回顾了下之前的OpenCV博文，这次用Qt简单做了个界面程序（且给个名字zximage），关于在Qt中集成OpenCV在<a href="http://xiahouzuoxin.github.io/notes/html/搭建Qt界面的OpenCV开发环境.html" target="_blank" rel="external">搭建Qt界面的OpenCV开发环境</a>一文中详细的讨论过了。我在做zximage之前C++不熟，Qt基本上0基础，这种滥竽充数的作品按理是拿不上台面的，但虚荣心作怪，在初学者面前显摆显摆还是可以的，这里就展示展示吧，也许将来哪天回过头来看看（明年毕业的时候回来看这些幼稚的东西又会是什么感受呢？）</p>
+<p>一开始是主界面，菜单栏做得很简单，就File,Tools,About，图片载入和保存对话框那是必须的，都在File菜单下，</p>
+<p><img src="../images/OpenCV集成到Qt的尝试-zximage/界面介绍.png" alt="界面介绍"></p>
+<p>Tools中是一些图像处理的算法（大部分都来自OpenCV），选择算法后都会弹出对话框，用于设置算法相关参数。下面就用Blur滤波器来进行磨皮的美化操作，</p>
+<p><img src="../images/OpenCV集成到Qt的尝试-zximage/滤波器的美化——磨皮.png" alt="滤波器的美化——磨皮"></p>
+<p><img src="../images/OpenCV集成到Qt的尝试-zximage/幂次变换调对比度.png" alt="幂次变换调对比度"></p>
+<p>图像中边缘检测很常见，zximage当然给加上了，</p>
+<p><img src="../images/OpenCV集成到Qt的尝试-zximage/边缘检测.png" alt="边缘检测"></p>
+<p>Hough变换检测道路边界，</p>
+<p><img src="../images/OpenCV集成到Qt的尝试-zximage/Hough直线检测.png" alt="Hough直线检测"></p>
+<p>形态学操作在OpenCV的图像处理篇中也用过，</p>
+<p><img src="../images/OpenCV集成到Qt的尝试-zximage/形态学操作.png" alt="形态学操作"></p>
+<p>直方图均衡化在图像处理中应用还是很普遍的，优点就是能自适应——不用设置参数，</p>
+<p><img src="../images/OpenCV集成到Qt的尝试-zximage/直方图及其均衡化.png" alt="直方图及其均衡化"></p>
+<p>人脸检测简直碉堡了，设计这些算法的人吃的都是啥啊，下面是Haar算子进行的人脸检测结果，</p>
+<p><img src="../images/OpenCV集成到Qt的尝试-zximage/人脸检测.png" alt="人脸检测"></p>
+<p>为了证明这个软件的摄像头功能确实是可用的，我拿着摄像头对着屏幕的运行的zximage拍。瞬间大吃一惊，这是什么！！怎么这么多窗口！！！好像发明避孕套的人发现了避孕套一样，很是惊喜，我似乎看到了鸡生蛋蛋生鸡的问题。。。。拍下软件窗口，摄像头界面显示窗口，又将显示额窗口拍下，又显示。。。所以中心出现极亮的光斑。。。</p>
+<p><img src="../images/OpenCV集成到Qt的尝试-zximage/软件自拍-鸡生蛋蛋生鸡.png" alt="软件自拍-鸡生蛋蛋生鸡"></p>
+<p>然后我把这个现象给实验室的师兄看，顺带给帅锅师兄来了一张，</p>
+<p><img src="../images/OpenCV集成到Qt的尝试-zximage/摄像头拍到的帅锅师兄.png" alt="摄像头拍到的帅锅师兄"></p>
+<p>最后来一张zximage的自拍人脸检测，这个是手机拍下的屏幕照片，屏幕太亮没办法，</p>
+<p><img src="../images/OpenCV集成到Qt的尝试-zximage/zximage摄像头自拍人脸识别.png" alt="zximage摄像头自拍人脸识别"></p>
+<h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><p>源码下载请到我的Github： <a href="https://github.com/xiahouzuoxin/opencv_study" target="_blank" rel="external">https://github.com/xiahouzuoxin/opencv_study</a> ,那里不仅包括zximage的源码，还包括我的OpenCV系列所有博文的源码，OpenCV系列博文链接可以在 <a href="http://xiahouzuoxin.github.io/notes/README.html" target="_blank" rel="external">http://xiahouzuoxin.github.io/notes/README.html</a> 找到。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lhnows.github.io/2016/01/27/OpenCV集成到Qt的尝试-zximage/" data-id="cj3n2onsw000ein52ayp9fhch" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/05/06/OpenCV基础篇之高级GUI/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/01/27/OpenCV图像处理篇之Hough变换/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/06/07/main-page/">main page</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/07/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/06/OpenCV基础篇之高级GUI/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/01/27/OpenCV集成到Qt的尝试-zximage/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/01/27/OpenCV图像处理篇之Hough变换/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 lhnows<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

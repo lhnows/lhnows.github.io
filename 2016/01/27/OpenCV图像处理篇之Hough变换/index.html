@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>lhnows&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="图像空间到参数空间的转换对于图像中共线的点集{(x0,y0), (x1,y1), …}都经过直线y=kx+b，先在我们换一个说法，“斜率为k，截距为b的直线y=kx+b包含了所有在该直线上的点”。一种强调的是图像中的点集，另一种强调的是直线的参数k和b，通过直线的点集去描述这条直线明显没有直接通过k,b两个参数去描述那样直接方便。而Hough变换就是将我们“点共线”的思维转化到参数空间{k,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lhnows&#39;s blog">
+<meta property="og:url" content="http://lhnows.github.io/2016/01/27/OpenCV图像处理篇之Hough变换/index.html">
+<meta property="og:site_name" content="lhnows&#39;s blog">
+<meta property="og:description" content="图像空间到参数空间的转换对于图像中共线的点集{(x0,y0), (x1,y1), …}都经过直线y=kx+b，先在我们换一个说法，“斜率为k，截距为b的直线y=kx+b包含了所有在该直线上的点”。一种强调的是图像中的点集，另一种强调的是直线的参数k和b，通过直线的点集去描述这条直线明显没有直接通过k,b两个参数去描述那样直接方便。而Hough变换就是将我们“点共线”的思维转化到参数空间{k,">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi? b=-kx+y">
+<meta property="og:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV图像处理篇之Hough变换/极坐标表示直线.jpg">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi? y=-\frac{cos(\theta)}{sin(\theta)}x+\frac{r}{sin(\theta)}">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi? r=x\cos{\theta}+y\sin{\theta}">
+<meta property="og:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV图像处理篇之Hough变换/Road1.png">
+<meta property="og:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV图像处理篇之Hough变换/Canny1.png">
+<meta property="og:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV图像处理篇之Hough变换/Hough1.png">
+<meta property="og:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV图像处理篇之Hough变换/Road2.png">
+<meta property="og:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV图像处理篇之Hough变换/Canny2.png">
+<meta property="og:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV图像处理篇之Hough变换/Hough2.png">
+<meta property="og:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV图像处理篇之Hough变换/HoughFunctionCall.jpg">
+<meta property="og:updated_time" content="2016-01-27T10:29:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="lhnows&#39;s blog">
+<meta name="twitter:description" content="图像空间到参数空间的转换对于图像中共线的点集{(x0,y0), (x1,y1), …}都经过直线y=kx+b，先在我们换一个说法，“斜率为k，截距为b的直线y=kx+b包含了所有在该直线上的点”。一种强调的是图像中的点集，另一种强调的是直线的参数k和b，通过直线的点集去描述这条直线明显没有直接通过k,b两个参数去描述那样直接方便。而Hough变换就是将我们“点共线”的思维转化到参数空间{k,">
+<meta name="twitter:image" content="http://www.forkosh.com/mathtex.cgi? b=-kx+y">
+  
+    <link rel="alternate" href="/atom.xml" title="lhnows&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">lhnows&#39;s blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">lhnows</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://lhnows.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-OpenCV图像处理篇之Hough变换" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/01/27/OpenCV图像处理篇之Hough变换/" class="article-date">
+  <time datetime="2016-01-27T10:29:30.000Z" itemprop="datePublished">2016-01-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!---title:OpenCV图像处理篇之Hough变换-->
+<!---keywords:OpenCV-->
+<!---dkte:2014-11-20-->
+<h2 id="图像空间到参数空间的转换"><a href="#图像空间到参数空间的转换" class="headerlink" title="图像空间到参数空间的转换"></a>图像空间到参数空间的转换</h2><p>对于图像中共线的点集{(x0,y0), (x1,y1), …}都经过直线y=kx+b，先在我们换一个说法，“斜率为k，截距为b的直线y=kx+b包含了所有在该直线上的点”。一种强调的是图像中的点集，另一种强调的是直线的参数k和b，通过直线的点集去描述这条直线明显没有直接通过k,b两个参数去描述那样直接方便。而Hough变换就是将我们“点共线”的思维转化到参数空间{k,b}进行描述，图像空间中所有经过y=kx+b的点经过Hough变换后在参数空间都会相交于点(k,b)，这样，通过Hough变换，就可以将图像空间中直线的检测转化为参数空间中对点的检测。我们不妨将y=kx+b进行一下变形：</p>
+<p><img src="http://www.forkosh.com/mathtex.cgi? b=-kx+y"></p>
+<p>这就是Hough变换将图像空间坐标(x,y)转化为参数空间(k,b)的Hough变换式。</p>
+<p>Hough变换的步骤（执行过程）：</p>
+<ol>
+<li><p>在参数空间中建立一个二维（分别对应k,b）计数器，实际就是二维数组kbcnt，k维度为图像中直线斜率可能范围，b维度为图像中截距可能范围；数组中所有值都初始化为0；</p>
+</li>
+<li><p>扫描图像空间中的所有点(xi,yi)，Hough变换式进行图像空间到参数空间的变换(ki,bi)，计数kbcnt(ki,bi)++</p>
+</li>
+<li><p>设定阈值thr（图像中有多少个点共线才认为存在直线），kbcnt(ki,bi)&gt;thr的ki,bi组成图像中的直线y=ki*x+bi</p>
+</li>
+</ol>
+<p>然而，上面的检测直线的方案貌似还有些问题：如果图像中存在竖直的直线呢，那kbcnt的k维度岂不是要无穷大！因此，才有了另一种参数空间的方案：利用极坐标参数而非“斜率-截距式”描述直线。</p>
+<p><img src="../images/OpenCV图像处理篇之Hough变换/极坐标表示直线.jpg" alt="极坐标中的直线表示"></p>
+<p>极坐标中的直线方程为</p>
+<p><img src="http://www.forkosh.com/mathtex.cgi? y=-\frac{cos(\theta)}{sin(\theta)}x+\frac{r}{sin(\theta)}"></p>
+<p>将其改写成Hough变换式，即自变量(x,y)到参数变量(r,$theta$)的映射：</p>
+<p><img src="http://www.forkosh.com/mathtex.cgi? r=x\cos{\theta}+y\sin{\theta}"></p>
+<p>使用极坐标参数空间，Hough变换的步骤不变，只不过将kbcnt替换成rthcnt，r范围是图像对角线的长度，th范围是0~2*pi。因为图像是离散的，所以r和th都有一个步进值dr和dth。</p>
+<p>Hough变换除了检测直线，还可用来检测任何能用数学表达式表示的形状，如最常见的圆、椭圆，基本原理都是将图像空间的像素转变到参数空间，然后在参数空间中对共线/圆/椭圆的点进行统计，最后通过阈值判决是否是符合要求的形状。</p>
+<p><a href="http://en.wikipedia.org/wiki/Hough_transform" target="_blank" rel="external">http://en.wikipedia.org/wiki/Hough_transform</a> 上对Hough变换的内容有更多的描述。</p>
+<h2 id="OpenCV中的Hough变换"><a href="#OpenCV中的Hough变换" class="headerlink" title="OpenCV中的Hough变换"></a>OpenCV中的Hough变换</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"> * FileName : hough.cpp</div><div class="line"> * Author   : xiahouzuoxin @163.com</div><div class="line"> * Version  : v1.0</div><div class="line"> * Date     : Wed 26 Nov 2014 09:52:45 PM CST</div><div class="line"> * Brief    : </div><div class="line"> * </div><div class="line"> * Copyright (C) MICL,USTB</div><div class="line"> */</div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"cv.h"</span> </span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"highgui.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"opencv2/imgproc/imgproc.hpp"</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> (argc &lt; <span class="number">2</span>) &#123;</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"Usage: ./hough [image file name]"</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    Mat src = imread(argv[<span class="number">1</span>], CV_LOAD_IMAGE_COLOR);</div><div class="line">    <span class="keyword">if</span> (!src.data) &#123;</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"Read image error"</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line">    namedWindow(<span class="string">"Source"</span>, CV_WINDOW_AUTOSIZE);</div><div class="line">    imshow(<span class="string">"Source"</span>, src);</div><div class="line"></div><div class="line">    Mat img;</div><div class="line">    cvtColor(src, img, CV_RGB2GRAY); </div><div class="line">    GaussianBlur(img, img, Size(<span class="number">3</span>,<span class="number">3</span>), <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">    Canny(img, img, <span class="number">100</span>, <span class="number">200</span>, <span class="number">3</span>);</div><div class="line">    namedWindow(<span class="string">"Canny"</span>, CV_WINDOW_AUTOSIZE);</div><div class="line">    imshow(<span class="string">"Canny"</span>, img);</div><div class="line"></div><div class="line">    <span class="built_in">vector</span>&lt;Vec2f&gt; lines;</div><div class="line">    HoughLines(img, lines, <span class="number">1</span>, CV_PI/<span class="number">360</span>, <span class="number">200</span>);  <span class="comment">// 返回直线坐标对</span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">size_t</span> i=<span class="number">0</span>; i&lt;lines.size(); i++) &#123;</div><div class="line">        <span class="keyword">float</span> rho = lines[i][<span class="number">0</span>]; </div><div class="line">        <span class="keyword">float</span> theta = lines[i][<span class="number">1</span>];</div><div class="line">        Point pt1,pt2;</div><div class="line">        <span class="keyword">double</span> a=<span class="built_in">cos</span>(theta);</div><div class="line">        <span class="keyword">double</span> b=<span class="built_in">sin</span>(theta);</div><div class="line">        <span class="keyword">double</span> x0 = rho*a;</div><div class="line">        <span class="keyword">double</span> y0 = rho*b;</div><div class="line">        pt1.x = cvRound(x0+<span class="number">1000</span>*(-b));</div><div class="line">        pt1.y = cvRound(y0+<span class="number">1000</span>*a);</div><div class="line">        pt2.x = cvRound(x0<span class="number">-1000</span>*(-b));</div><div class="line">        pt2.y = cvRound(y0<span class="number">-1000</span>*a);</div><div class="line">        line(src, pt1, pt2, Scalar(<span class="number">0</span>,<span class="number">0</span>,<span class="number">255</span>), <span class="number">3</span>, CV_AA);</div><div class="line">    &#125; </div><div class="line">    namedWindow(<span class="string">"Hough"</span>, CV_WINDOW_AUTOSIZE);</div><div class="line">    imshow(<span class="string">"Hough"</span>, src);</div><div class="line"></div><div class="line">    waitKey();</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在做Hough变换之前，一般都要先使用LOG或Canny先检测边缘，再对边缘图像进行Hough变换操作，上面程序使用Canny算子检测边缘，Canny算子<code>Canny(img, img, 100, 200, 3);</code>的两个阈值100,100选择很重要，间接影响Hough检测的结果，同时<code>HoughLines</code>中的阈值参数也应该细调。用上面程序对道路直线进行检测结果如下，</p>
+<p><img src="../images/OpenCV图像处理篇之Hough变换/Road1.png" alt="道路图片1"></p>
+<p><img src="../images/OpenCV图像处理篇之Hough变换/Canny1.png" alt="Canny算子边缘检测结果"></p>
+<p><img src="../images/OpenCV图像处理篇之Hough变换/Hough1.png" alt="Hough直线检测结果"></p>
+<p><img src="../images/OpenCV图像处理篇之Hough变换/Road2.png" alt="道路图片2"></p>
+<p><img src="../images/OpenCV图像处理篇之Hough变换/Canny2.png" alt="Canny算子边缘检测结果"></p>
+<p><img src="../images/OpenCV图像处理篇之Hough变换/Hough2.png" alt="Hough直线检测结果"></p>
+<h2 id="Hough变换源码分析"><a href="#Hough变换源码分析" class="headerlink" title="Hough变换源码分析"></a>Hough变换源码分析</h2><p>Hough变换的源代码在<code>modules/imgproc/src/hough.cpp</code>中，提供了3种Hough变换源码：直线检测、概率Hough变换检测直线、圆检测，如果要实现其它有解析方程的图形的检测，则要自己动手写了。</p>
+<p><img src="../images/OpenCV图像处理篇之Hough变换/HoughFunctionCall.jpg" alt="Hough变换调用接口函数解释"></p>
+<p>先看Hough检测直线的代码，<code>cvHoughLines2</code>也只不过是个对不同Hough方法的封装，下面是该函数中的部分代码，选择不同的Hough变换方法，</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">switch</span>( method )</div><div class="line">&#123;</div><div class="line"><span class="keyword">case</span> CV_HOUGH_STANDARD:</div><div class="line">      icvHoughLinesStandard( img, (<span class="keyword">float</span>)rho,</div><div class="line">            (<span class="keyword">float</span>)theta, threshold, lines, linesMax );      <span class="comment">// 标准Hough变换</span></div><div class="line">      <span class="keyword">break</span>;</div><div class="line"><span class="keyword">case</span> CV_HOUGH_MULTI_SCALE:</div><div class="line">      icvHoughLinesSDiv( img, (<span class="keyword">float</span>)rho, (<span class="keyword">float</span>)theta,</div><div class="line">            threshold, iparam1, iparam2, lines, linesMax );  <span class="comment">// 多尺度Hough变换</span></div><div class="line">      <span class="keyword">break</span>;</div><div class="line"><span class="keyword">case</span> CV_HOUGH_PROBABILISTIC:</div><div class="line">      icvHoughLinesProbabalistic( img, (<span class="keyword">float</span>)rho, (<span class="keyword">float</span>)theta,</div><div class="line">            threshold, iparam1, iparam2, lines, linesMax );  <span class="comment">// 概率Hough变换</span></div><div class="line">      <span class="keyword">break</span>;</div><div class="line"><span class="keyword">default</span>:</div><div class="line">    CV_Error( CV_StsBadArg, <span class="string">"Unrecognized method id"</span> );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>不妨详细看看标准Hough变换的实现代码，</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* 这段注释解释了函数各个参数的作用</span></div><div class="line">Here image is an input raster;</div><div class="line">step is it's step; size characterizes it's ROI;</div><div class="line">rho and theta are discretization steps (in pixels and radians correspondingly).</div><div class="line">threshold is the minimum number of pixels in the feature for it</div><div class="line">to be a candidate for line. lines is the output</div><div class="line">array of (rho, theta) pairs. linesMax is the buffer size (number of pairs).</div><div class="line">Functions return the actual number of found lines.</div><div class="line">*/</div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span></span></div><div class="line"><span class="title">icvHoughLinesStandard</span><span class="params">( <span class="keyword">const</span> CvMat* img, <span class="keyword">float</span> rho, <span class="keyword">float</span> theta,</span></div><div class="line">                       <span class="keyword">int</span> threshold, CvSeq *lines, <span class="keyword">int</span> linesMax )</div><div class="line">&#123;</div><div class="line">    cv::AutoBuffer&lt;<span class="keyword">int</span>&gt; _accum, _sort_buf;    <span class="comment">// _accum：计数用数组，_sort_buf，排序用数组</span></div><div class="line">    cv::AutoBuffer&lt;<span class="keyword">float</span>&gt; _tabSin, _tabCos;   <span class="comment">// 提前计算sin与cos值，避免重复计算带来的计算性能下降</span></div><div class="line"></div><div class="line">    <span class="keyword">const</span> uchar* image;</div><div class="line">    <span class="keyword">int</span> step, width, height;</div><div class="line">    <span class="keyword">int</span> numangle, numrho;</div><div class="line">    <span class="keyword">int</span> total = <span class="number">0</span>;</div><div class="line">    <span class="keyword">float</span> ang;</div><div class="line">    <span class="keyword">int</span> r, n;</div><div class="line">    <span class="keyword">int</span> i, j;</div><div class="line">    <span class="keyword">float</span> irho = <span class="number">1</span> / rho;   <span class="comment">// rho指像素精度，常取1，因此irho常为1</span></div><div class="line">    <span class="keyword">double</span> scale;</div><div class="line"></div><div class="line">    CV_Assert( CV_IS_MAT(img) &amp;&amp; CV_MAT_TYPE(img-&gt;type) == CV_8UC1 );</div><div class="line"></div><div class="line">    image = img-&gt;data.ptr;</div><div class="line">    step = img-&gt;step;</div><div class="line">    width = img-&gt;cols;</div><div class="line">    height = img-&gt;rows;</div><div class="line"></div><div class="line">    numangle = cvRound(CV_PI / theta);  <span class="comment">// 根据th精度计算th维度的长度</span></div><div class="line">    numrho = cvRound(((width + height) * <span class="number">2</span> + <span class="number">1</span>) / rho);  <span class="comment">// 根据r精度计算r维度的长度</span></div><div class="line"></div><div class="line">    _accum.allocate((numangle+<span class="number">2</span>) * (numrho+<span class="number">2</span>));</div><div class="line">    _sort_buf.allocate(numangle * numrho);</div><div class="line">    _tabSin.allocate(numangle);</div><div class="line">    _tabCos.allocate(numangle);</div><div class="line">    <span class="keyword">int</span> *accum = _accum, *sort_buf = _sort_buf;</div><div class="line">    <span class="keyword">float</span> *tabSin = _tabSin, *tabCos = _tabCos;</div><div class="line">    </div><div class="line">    <span class="built_in">memset</span>( accum, <span class="number">0</span>, <span class="keyword">sizeof</span>(accum[<span class="number">0</span>]) * (numangle+<span class="number">2</span>) * (numrho+<span class="number">2</span>) );</div><div class="line"></div><div class="line">    <span class="keyword">for</span>( ang = <span class="number">0</span>, n = <span class="number">0</span>; n &lt; numangle; ang += theta, n++ )   <span class="comment">// 计算三角函数表，避免重复计算</span></div><div class="line">    &#123;</div><div class="line">        tabSin[n] = (<span class="keyword">float</span>)(<span class="built_in">sin</span>(ang) * irho);</div><div class="line">        tabCos[n] = (<span class="keyword">float</span>)(<span class="built_in">cos</span>(ang) * irho);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// stage 1. fill accumulator </span></div><div class="line">    <span class="keyword">for</span>( i = <span class="number">0</span>; i &lt; height; i++ )</div><div class="line">        <span class="keyword">for</span>( j = <span class="number">0</span>; j &lt; width; j++ )</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span>( image[i * step + j] != <span class="number">0</span> )</div><div class="line">                <span class="keyword">for</span>( n = <span class="number">0</span>; n &lt; numangle; n++ )</div><div class="line">                &#123;</div><div class="line">                    r = cvRound( j * tabCos[n] + i * tabSin[n] );  <span class="comment">// Hough极坐标变换式</span></div><div class="line">                    r += (numrho - <span class="number">1</span>) / <span class="number">2</span>;</div><div class="line">                    accum[(n+<span class="number">1</span>) * (numrho+<span class="number">2</span>) + r+<span class="number">1</span>]++;  <span class="comment">// 计数器统计</span></div><div class="line">                &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    <span class="comment">// stage 2. find local maximums</span></div><div class="line">    <span class="keyword">for</span>( r = <span class="number">0</span>; r &lt; numrho; r++ )</div><div class="line">        <span class="keyword">for</span>( n = <span class="number">0</span>; n &lt; numangle; n++ )</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">int</span> base = (n+<span class="number">1</span>) * (numrho+<span class="number">2</span>) + r+<span class="number">1</span>;</div><div class="line">            <span class="keyword">if</span>( accum[base] &gt; threshold &amp;&amp;             <span class="comment">// 大于阈值，且是局部极大值</span></div><div class="line">                accum[base] &gt; accum[base - <span class="number">1</span>] &amp;&amp; accum[base] &gt;= accum[base + <span class="number">1</span>] &amp;&amp;</div><div class="line">                accum[base] &gt; accum[base - numrho - <span class="number">2</span>] &amp;&amp; accum[base] &gt;= accum[base + numrho + <span class="number">2</span>] )</div><div class="line">                sort_buf[total++] = base;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    <span class="comment">// stage 3. sort the detected lines by accumulator value</span></div><div class="line">    icvHoughSortDescent32s( sort_buf, total, accum );</div><div class="line"></div><div class="line">    <span class="comment">// stage 4. store the first min(total,linesMax) lines to the output buffer</span></div><div class="line">    linesMax = MIN(linesMax, total);  <span class="comment">// linesMax是输入参数，表示最多输出多少个直线参数</span></div><div class="line">    scale = <span class="number">1.</span>/(numrho+<span class="number">2</span>);</div><div class="line">    <span class="keyword">for</span>( i = <span class="number">0</span>; i &lt; linesMax; i++ )</div><div class="line">    &#123;</div><div class="line">        CvLinePolar line;           <span class="comment">// 输出结构，就是(r,theta)</span></div><div class="line">        <span class="keyword">int</span> idx = sort_buf[i];</div><div class="line">        <span class="keyword">int</span> n = cvFloor(idx*scale) - <span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> r = idx - (n+<span class="number">1</span>)*(numrho+<span class="number">2</span>) - <span class="number">1</span>;</div><div class="line">        line.rho = (r - (numrho - <span class="number">1</span>)*<span class="number">0.5f</span>) * rho;</div><div class="line">        line.angle = n * theta;</div><div class="line">        cvSeqPush( lines, &amp;line );  <span class="comment">// 确定的直线入队列输出</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Hough.cpp中对输出结构的定义为：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">CvLinePolar</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">float</span> rho;           </div><div class="line">    <span class="keyword">float</span> angle;         </div><div class="line">&#125; CvLinePolar;</div></pre></td></tr></table></figure>
+<p>其它的Hough变换采用类似的方式逐层可以分析其源码，不妨自己试试？</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lhnows.github.io/2016/01/27/OpenCV图像处理篇之Hough变换/" data-id="cj3n2onrt0000in52v78xh5qa" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/01/27/OpenCV集成到Qt的尝试-zximage/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/01/27/OpenCV图像处理篇之腐蚀与膨胀/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/06/07/main-page/">main page</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/07/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/06/OpenCV基础篇之高级GUI/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/01/27/OpenCV集成到Qt的尝试-zximage/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/01/27/OpenCV图像处理篇之Hough变换/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 lhnows<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

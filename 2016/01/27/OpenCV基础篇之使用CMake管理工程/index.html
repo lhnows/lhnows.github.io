@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>lhnows&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="程序及分析123456789101112131415161718192021222324252627282930313233/* * FileName : read.cpp * Author   : xiahouzuoxin @163.com * Version  : v1.0 * Date     : Tue 13 May 2014 07:34:25 PM CST * Brief    :">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lhnows&#39;s blog">
+<meta property="og:url" content="http://lhnows.github.io/2016/01/27/OpenCV基础篇之使用CMake管理工程/index.html">
+<meta property="og:site_name" content="lhnows&#39;s blog">
+<meta property="og:description" content="程序及分析123456789101112131415161718192021222324252627282930313233/* * FileName : read.cpp * Author   : xiahouzuoxin @163.com * Version  : v1.0 * Date     : Tue 13 May 2014 07:34:25 PM CST * Brief    :">
+<meta property="og:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV基础篇之使用CMake管理工程/result.png">
+<meta property="og:updated_time" content="2016-01-27T10:29:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="lhnows&#39;s blog">
+<meta name="twitter:description" content="程序及分析123456789101112131415161718192021222324252627282930313233/* * FileName : read.cpp * Author   : xiahouzuoxin @163.com * Version  : v1.0 * Date     : Tue 13 May 2014 07:34:25 PM CST * Brief    :">
+<meta name="twitter:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV基础篇之使用CMake管理工程/result.png">
+  
+    <link rel="alternate" href="/atom.xml" title="lhnows&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">lhnows&#39;s blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">lhnows</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://lhnows.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-OpenCV基础篇之使用CMake管理工程" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/01/27/OpenCV基础篇之使用CMake管理工程/" class="article-date">
+  <time datetime="2016-01-27T10:29:30.000Z" itemprop="datePublished">2016-01-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!---title:OpenCV基础篇之使用CMake管理工程-->
+<!---keywords:OpenCV-->
+<!---date:2014-09-18-->
+<h2 id="程序及分析"><a href="#程序及分析" class="headerlink" title="程序及分析"></a>程序及分析</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"> * FileName : read.cpp</div><div class="line"> * Author   : xiahouzuoxin @163.com</div><div class="line"> * Version  : v1.0</div><div class="line"> * Date     : Tue 13 May 2014 07:34:25 PM CST</div><div class="line"> * Brief    : </div><div class="line"> * </div><div class="line"> * Copyright (C) MICL,USTB</div><div class="line"> */</div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cv.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;highgui.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span></span></div><div class="line">&#123;</div><div class="line">    Mat img;</div><div class="line"></div><div class="line">    img = imread(argv[<span class="number">1</span>], <span class="number">1</span>);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (argc != <span class="number">2</span> || !img.data) &#123;</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"No image data.\n"</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    namedWindow(<span class="string">"Display Image"</span>, CV_WINDOW_AUTOSIZE);</div><div class="line">    imshow(<span class="string">"Display Image"</span>, img);</div><div class="line"></div><div class="line">    waitKey(<span class="number">0</span>);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li><p>这就是<a href="OpenCV基础篇之读取显示图片.md">OpenCV基础篇之读取显示图片</a>中使用的代码</p>
+</li>
+<li><p>如果没有安装CMake，则使用下面命令安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install cmake</div></pre></td></tr></table></figure>
+</li>
+<li><p>CMake是一款工程管理软件，比Makefile平台迁移性更好，通过CMake能自动生成Makefile。用于本程序的CMake文件内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">project(read)</div><div class="line">find_package(OpenCV REQUIRED)</div><div class="line">add_executable(read read)</div><div class="line">target_link_libraries(read $&#123;OpenCV_LIBS&#125;)</div></pre></td></tr></table></figure>
+<p>将上述内容保存到文件名为CMakeLists.txt（必须是这个文件名）的文件中，依次执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cmake ./</div><div class="line">make</div></pre></td></tr></table></figure>
+<p>cmake命令直接生成Makefile，通过Makefile生成可执行文件（这也就是为什么cmake平台迁移性好，不同的平台能生成对应的Makefile，很容易迁移到Windows）。</p>
+</li>
+</ol>
+<h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><p><img src="../images/OpenCV基础篇之使用CMake管理工程/result.png" alt="result"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lhnows.github.io/2016/01/27/OpenCV基础篇之使用CMake管理工程/" data-id="cj3n2ons70006in52ay4nlq76" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/01/27/OpenCV基础篇之Mat数据结构/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/01/27/OpenCV基础篇之像素操作对比度调节/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/06/07/main-page/">main page</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/07/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/06/OpenCV基础篇之高级GUI/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/01/27/OpenCV集成到Qt的尝试-zximage/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/01/27/OpenCV图像处理篇之Hough变换/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 lhnows<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>lhnows&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="阈值操作类型这5种阈值操作类型保留opencv tutorials中的英文名称，依次为：  Threshold Binary：即二值化，将大于阈值的灰度值设为最大灰度值，小于阈值的值设为0。 Threshold Binary, Inverted：将大于阈值的灰度值设为0，大于阈值的值设为最大灰度值。 Truncate：将大于阈值的灰度值设为阈值，小于阈值的值保持不变。 Threshold t">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lhnows&#39;s blog">
+<meta property="og:url" content="http://lhnows.github.io/2016/01/27/OpenCV图像处理篇之阈值操作函数/index.html">
+<meta property="og:site_name" content="lhnows&#39;s blog">
+<meta property="og:description" content="阈值操作类型这5种阈值操作类型保留opencv tutorials中的英文名称，依次为：  Threshold Binary：即二值化，将大于阈值的灰度值设为最大灰度值，小于阈值的值设为0。 Threshold Binary, Inverted：将大于阈值的灰度值设为0，大于阈值的值设为最大灰度值。 Truncate：将大于阈值的灰度值设为阈值，小于阈值的值保持不变。 Threshold t">
+<meta property="og:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV图像处理篇之阈值操作函数/原图-林依晨.png">
+<meta property="og:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV图像处理篇之阈值操作函数/结果-使用阈值操作2.png">
+<meta property="og:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV图像处理篇之阈值操作函数/原图-未知美女一枚.png">
+<meta property="og:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV图像处理篇之阈值操作函数/结果-使用阈值操作3.png">
+<meta property="og:updated_time" content="2016-01-27T10:29:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="lhnows&#39;s blog">
+<meta name="twitter:description" content="阈值操作类型这5种阈值操作类型保留opencv tutorials中的英文名称，依次为：  Threshold Binary：即二值化，将大于阈值的灰度值设为最大灰度值，小于阈值的值设为0。 Threshold Binary, Inverted：将大于阈值的灰度值设为0，大于阈值的值设为最大灰度值。 Truncate：将大于阈值的灰度值设为阈值，小于阈值的值保持不变。 Threshold t">
+<meta name="twitter:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV图像处理篇之阈值操作函数/原图-林依晨.png">
+  
+    <link rel="alternate" href="/atom.xml" title="lhnows&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">lhnows&#39;s blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">lhnows</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://lhnows.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-OpenCV图像处理篇之阈值操作函数" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/01/27/OpenCV图像处理篇之阈值操作函数/" class="article-date">
+  <time datetime="2016-01-27T10:29:30.000Z" itemprop="datePublished">2016-01-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!---title:OpenCV图像处理篇之阈值操作函数-->
+<!---keywords:OpenCV-->
+<!---date:2014-11-12-->
+<h2 id="阈值操作类型"><a href="#阈值操作类型" class="headerlink" title="阈值操作类型"></a>阈值操作类型</h2><p>这5种阈值操作类型保留opencv tutorials中的英文名称，依次为：</p>
+<ol>
+<li>Threshold Binary：即二值化，将大于阈值的灰度值设为最大灰度值，小于阈值的值设为0。</li>
+<li>Threshold Binary, Inverted：将大于阈值的灰度值设为0，大于阈值的值设为最大灰度值。</li>
+<li>Truncate：将大于阈值的灰度值设为阈值，小于阈值的值保持不变。</li>
+<li>Threshold to Zero：将小于阈值的灰度值设为0，大于阈值的值保持不变。</li>
+<li>Threshold to Zero, Inverted：将大于阈值的灰度值设为0，小于阈值的值保持不变。</li>
+</ol>
+<p>OpenCV提供了<code>threshold</code>函数专门用于阈值操作，其实实现起来很简单，为什么非得调用函数呢？一是熟悉了调用函数很方便，如果一行代码能搞定的事为什么非得用几个循环呢？二是对于新手，自己实现未必敢保证运行效率上未必能达到opencv那样好。</p>
+<h2 id="程序分析"><a href="#程序分析" class="headerlink" title="程序分析"></a>程序分析</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"> * FileName : filter_and_threshold.cpp</div><div class="line"> * Author   : xiahouzuoxin @163.com</div><div class="line"> * Version  : v1.0</div><div class="line"> * Date     : Sat 20 Sep 2014 07:04:29 PM CST</div><div class="line"> * Brief    : </div><div class="line"> * </div><div class="line"> * Copyright (C) MICL,USTB</div><div class="line"> */</div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"cv.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"highgui.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"opencv2/imgproc/imgproc.hpp"</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</div><div class="line"></div><div class="line">Mat src,gray,dst;</div><div class="line"></div><div class="line"><span class="keyword">const</span> <span class="keyword">char</span> *wn = <span class="string">"Demo"</span>;</div><div class="line"><span class="keyword">int</span> th_val = <span class="number">0</span>;</div><div class="line"><span class="keyword">int</span> th_type = <span class="number">3</span>;</div><div class="line"><span class="keyword">int</span> <span class="keyword">const</span> max_val = <span class="number">255</span>;</div><div class="line"><span class="keyword">int</span> <span class="keyword">const</span> max_type = <span class="number">4</span>;</div><div class="line"><span class="keyword">int</span> <span class="keyword">const</span> max_BINARY_val = <span class="number">255</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Thresh</span><span class="params">(<span class="keyword">int</span>, <span class="keyword">void</span> *)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="comment">/*</span></div><div class="line">	 * 0: Binary</div><div class="line">	 * 1: Binary Inverted</div><div class="line">	 * 2: Threshold Truncated</div><div class="line">	 * 3: Threshold to Zero</div><div class="line">	 * 4: Threshold to Zero Inverted</div><div class="line">	 */</div><div class="line">	</div><div class="line">	threshold(gray, dst, th_val, max_BINARY_val, th_type);</div><div class="line"></div><div class="line">	imshow(wn, dst);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line"> * @brief   </div><div class="line"> * @inputs  </div><div class="line"> * @outputs </div><div class="line"> * @retval  </div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> (argc &lt; <span class="number">2</span>) &#123;</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"Usage: ./threshold [file name]"</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">	<span class="comment">// read image as GRAYSCALE</span></div><div class="line">	src = imread(argv[<span class="number">1</span>], CV_LOAD_IMAGE_COLOR);</div><div class="line">    <span class="keyword">if</span> (!src.data) &#123;</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"Error: read data"</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">	<span class="comment">// window to display</span></div><div class="line">	namedWindow(wn);</div><div class="line">	createTrackbar(<span class="string">"Value"</span>, wn, &amp;th_val, max_val, Thresh);  <span class="comment">/* bar */</span></div><div class="line">	createTrackbar(<span class="string">"Type: \n 0: Binary \n 1: Binary Inverted \n 2: Truncate \n 3: To Zero \n 4: To Zero Inverted"</span>, </div><div class="line">            wn, &amp;th_type, max_type, Thresh);</div><div class="line"></div><div class="line">    cvtColor(src, gray, CV_RGB2GRAY);</div><div class="line"></div><div class="line">	<span class="comment">// Init by Calling Thresh</span></div><div class="line">	Thresh(<span class="number">0</span>, <span class="number">0</span>);</div><div class="line"></div><div class="line">	<span class="comment">// wait if ESC be pressed</span></div><div class="line">	<span class="keyword">while</span>(<span class="number">1</span>)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">char</span> c = waitKey(<span class="number">20</span>);</div><div class="line"></div><div class="line">		<span class="keyword">if</span>(c == <span class="number">27</span>)         <span class="comment">/* ESC */</span></div><div class="line">		&#123;</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li><p>整个程序就一句话是关键：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">threshold(gray, dst, th_val, max_BINARY_val, th_type);</div></pre></td></tr></table></figure>
+<p>threshold的参数依次是原灰度图、输出阈值操作后的图、阈值、最大灰度值以及阈值类型。其中，最大灰度值并不一定就是255，在上面提到的阈值操作1和2中提到，“设为最大灰度值”，如果你觉得不像让图像的最大灰度值大于200，那就设为200就好了。阈值类型取值为0~4，按顺序依次对应前面提到的5种阈值操作类型。</p>
+</li>
+<li><p><code>createTrackbar</code>是创建滑动条的gui函数。以<code>createTrackbar(&quot;Value&quot;, wn, &amp;th_val, max_val, Thresh);</code>为例，该滑动条值与变量<code>th_val</code>的值关联，一旦<code>th_val</code>改变，自动调用回调函数Thresh，<code>createTrackbar</code>使用的回调函数格式必需是程序中的<code>void Thresh(int, void *)</code>，即返回void，参数含<code>int</code>和<code>void *</code>类型。</p>
+</li>
+</ol>
+<h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><p><img src="../images/OpenCV图像处理篇之阈值操作函数/原图-林依晨.png" alt="原图-林依晨"><br><img src="../images/OpenCV图像处理篇之阈值操作函数/结果-使用阈值操作2.png" alt="结果-使用阈值操作2"></p>
+<p>林依晨的的图片被我P一下就成那样了！上面的第二幅图片使用的是阈值操作2。</p>
+<p><img src="../images/OpenCV图像处理篇之阈值操作函数/原图-未知美女一枚.png" alt="原图-未知美女一枚"><br><img src="../images/OpenCV图像处理篇之阈值操作函数/结果-使用阈值操作3.png" alt="结果-使用阈值操作3"></p>
+<p>这回是未知美女一枚，使用阈值操作方法3后的结果如右图，感觉没什么差别，有木有？确实差别不大，谁叫人家头发本来就那么黑那么靓丽呢！细看还是能看出来眉毛变细了，发丝变黑了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lhnows.github.io/2016/01/27/OpenCV图像处理篇之阈值操作函数/" data-id="cj3n2ons40003in52ek57dt2g" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/01/27/OpenCV图像处理篇之图像平滑/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/01/27/OpenCV图像处理篇之采样金字塔/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/06/07/main-page/">main page</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/07/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/06/OpenCV基础篇之高级GUI/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/01/27/OpenCV集成到Qt的尝试-zximage/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/01/27/OpenCV图像处理篇之Hough变换/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 lhnows<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

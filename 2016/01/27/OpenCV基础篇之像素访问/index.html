@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>lhnows&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="程序及分析12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576/* * FileName : get_pixels.cpp * Author   : xiaho">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lhnows&#39;s blog">
+<meta property="og:url" content="http://lhnows.github.io/2016/01/27/OpenCV基础篇之像素访问/index.html">
+<meta property="og:site_name" content="lhnows&#39;s blog">
+<meta property="og:description" content="程序及分析12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576/* * FileName : get_pixels.cpp * Author   : xiaho">
+<meta property="og:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV基础篇之像素访问/result.png">
+<meta property="og:updated_time" content="2016-01-27T10:29:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="lhnows&#39;s blog">
+<meta name="twitter:description" content="程序及分析12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576/* * FileName : get_pixels.cpp * Author   : xiaho">
+<meta name="twitter:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV基础篇之像素访问/result.png">
+  
+    <link rel="alternate" href="/atom.xml" title="lhnows&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">lhnows&#39;s blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">lhnows</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://lhnows.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-OpenCV基础篇之像素访问" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/01/27/OpenCV基础篇之像素访问/" class="article-date">
+  <time datetime="2016-01-27T10:29:30.000Z" itemprop="datePublished">2016-01-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!---title:OpenCV基础篇之像素访问-->
+<!---keywords:OpenCV-->
+<!---date:2014-09-18-->
+<h2 id="程序及分析"><a href="#程序及分析" class="headerlink" title="程序及分析"></a>程序及分析</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"> * FileName : get_pixels.cpp</div><div class="line"> * Author   : xiahouzuoxin @163.com</div><div class="line"> * Version  : v1.0</div><div class="line"> * Date     : Sun 01 Jun 2014 06:40:54 PM CST</div><div class="line"> * Brief    : </div><div class="line"> * </div><div class="line"> * Copyright (C) MICL,USTB</div><div class="line"> */</div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cv.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;highgui.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> (argc &lt; <span class="number">2</span>) &#123;</div><div class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"Usage: ./get_pixels [imag name]"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    Mat img;</div><div class="line">    </div><div class="line">    img = imread(argv[<span class="number">1</span>], <span class="number">1</span>);</div><div class="line">    </div><div class="line"></div><div class="line">    <span class="comment">/*</span></div><div class="line">     * Reverse pixels</div><div class="line">     */</div><div class="line">    Mat out1 = img.clone();  <span class="comment">// change dst will not affect img</span></div><div class="line"></div><div class="line">    <span class="keyword">long</span> n_rows = out1.rows;</div><div class="line">    <span class="keyword">long</span> n_cols = out1.cols * out1.channels();</div><div class="line"></div><div class="line">    <span class="comment">/*</span></div><div class="line">     * Row pointer</div><div class="line">     */</div><div class="line">    uchar *p;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">long</span> i=<span class="number">0</span>; i&lt;n_rows; i++) &#123;</div><div class="line">        p = out1.ptr&lt;uchar&gt;(i);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">long</span> j=<span class="number">0</span>; j&lt;n_cols; j++) &#123;</div><div class="line">            p[j] = <span class="number">255</span> - p[j];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/*</span></div><div class="line">     * Element pointer</div><div class="line">     */</div><div class="line">    Mat out2;</div><div class="line">    out2.create(img.size(), img.type());  <span class="comment">// reserve size and type but alloc new space</span></div><div class="line"></div><div class="line">    n_rows = out2.rows;</div><div class="line">    n_cols = out2.cols * out2.channels();</div><div class="line"></div><div class="line">    p = out2.data;</div><div class="line">    <span class="keyword">double</span> c = <span class="number">0.5</span>;</div><div class="line">    <span class="keyword">double</span> b = <span class="number">30</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">long</span> i=<span class="number">0</span>; i&lt;n_rows*n_cols; i++) &#123;</div><div class="line">       *(p+i) = (uchar)(<span class="number">255</span> * <span class="number">0.5</span> * ((<span class="keyword">double</span>)(img.data[i]) / <span class="number">255</span>) + b);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/*</span></div><div class="line">     * Display</div><div class="line">     */</div><div class="line">    namedWindow(<span class="string">"src_image"</span>, CV_WINDOW_NORMAL);</div><div class="line">    imshow(<span class="string">"src_image"</span>, img);</div><div class="line">    namedWindow(<span class="string">"reverse_image"</span>, CV_WINDOW_NORMAL);</div><div class="line">    imshow(<span class="string">"reverse_image"</span>, out1);</div><div class="line">    namedWindow(<span class="string">"mici_image"</span>, CV_WINDOW_NORMAL);</div><div class="line">    imshow(<span class="string">"mici_image"</span>, out2);</div><div class="line"></div><div class="line">    waitKey(<span class="number">0</span>);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li><p>基于元素指针的像素访问：根据Mat的数据结构，按理我们可以通过Mat.data访问像素数据的指针，再根据指针访问到像素数据，这是最直接的方法，一般图片数据在内存中都是连续存储（一般应该使用is_continues()进行判断，注意上面程序中没有，因为大部分情况是连续存储的，所以没有考虑），这种访问像素方式的一般格式是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">uchar *p;  // 定义一个像素索引指针</div><div class="line">p = image.data;  // image为Mat对象，将对象的数据指针赋值给p</div><div class="line">for (long i=0; i &lt; image.rows*image.cols*image.channels(); i++) &#123;</div><div class="line">	*p++ = ..;  // 通过索引指针操作数据</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面程序通过元素指针的方法给出了一个幂次变换的例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">*(p+i) = (uchar)(255 * 0.5 * ((double)(img.data[i]) / 255) + b);</div></pre></td></tr></table></figure>
+<p>幂次变换是一种很好用的图像增强的方法，我的Github上还有一个Matlab写的用幂次变换处理外出爬山风景照片的例子（<a href="https://github.com/xiahouzuoxin/zx_photo）" target="_blank" rel="external">https://github.com/xiahouzuoxin/zx_photo）</a></p>
+</li>
+<li><p>基于行指针的访问：OpenCV中定义了一个ptr方法，是一个模板：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">// returns pointer to the matrix element</div><div class="line">// idx – rows,you should use @isContinues() before decided it</div><div class="line">template&lt;int n&gt; uchar* ptr(const Vec&lt;int, n&gt;&amp; idx);</div></pre></td></tr></table></figure>
+<p>通过ptr<uchar>(i)直接获得Mat对象的第i行的指针，跟二维数组的行指针有些类似，继而可以通过ptr<uchar>(i)[j]得到第i行第j列的像素值。</uchar></uchar></p>
+<p>上面程序给出了使用行指针进行图像反转的例子。</p>
+</li>
+<li><p>请注意一下其它的函数：img.clone()之前已经讲过——除了拷贝Mat数据结构的头和数据指针，连数据也一块拷贝，并将数据指针指向新拷贝的数据。</p>
+</li>
+</ol>
+<h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><p><img src="../images/OpenCV基础篇之像素访问/result.png" alt="result"></p>
+<p>左边是元素图片，中间是经过图片反转之后的图片，右边是使用幂次变换增强后的图片。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lhnows.github.io/2016/01/27/OpenCV基础篇之像素访问/" data-id="cj3n2onsa0008in52l25rr745" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/01/27/OpenCV基础篇之像素操作对比度调节/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/01/27/OpenCV基础篇之图像频域/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/06/07/main-page/">main page</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/07/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/06/OpenCV基础篇之高级GUI/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/01/27/OpenCV集成到Qt的尝试-zximage/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/01/27/OpenCV图像处理篇之Hough变换/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 lhnows<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

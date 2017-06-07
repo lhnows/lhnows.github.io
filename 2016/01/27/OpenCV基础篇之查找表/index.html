@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>lhnows&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="程序及分析12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061/* * FileName : lookup_table.cpp * Author   : xiahouzuoxin @163.com * Version">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lhnows&#39;s blog">
+<meta property="og:url" content="http://lhnows.github.io/2016/01/27/OpenCV基础篇之查找表/index.html">
+<meta property="og:site_name" content="lhnows&#39;s blog">
+<meta property="og:description" content="程序及分析12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061/* * FileName : lookup_table.cpp * Author   : xiahouzuoxin @163.com * Version">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi? \small I_{\text{new}}=\frac{I_{\text{old}}}{Q}*Q">
+<meta property="og:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV基础篇之查找表/result.png">
+<meta property="og:updated_time" content="2016-01-27T10:29:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="lhnows&#39;s blog">
+<meta name="twitter:description" content="程序及分析12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061/* * FileName : lookup_table.cpp * Author   : xiahouzuoxin @163.com * Version">
+<meta name="twitter:image" content="http://www.forkosh.com/mathtex.cgi? \small I_{\text{new}}=\frac{I_{\text{old}}}{Q}*Q">
+  
+    <link rel="alternate" href="/atom.xml" title="lhnows&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">lhnows&#39;s blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">lhnows</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://lhnows.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-OpenCV基础篇之查找表" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/01/27/OpenCV基础篇之查找表/" class="article-date">
+  <time datetime="2016-01-27T10:29:30.000Z" itemprop="datePublished">2016-01-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!---title:OpenCV基础篇之查找表-->
+<!---keywords:OpenCV-->
+<!---date:2014-09-18-->
+<h2 id="程序及分析"><a href="#程序及分析" class="headerlink" title="程序及分析"></a>程序及分析</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"> * FileName : lookup_table.cpp</div><div class="line"> * Author   : xiahouzuoxin @163.com</div><div class="line"> * Version  : v1.0</div><div class="line"> * Date     : Sun 01 Jun 2014 04:35:37 PM CST</div><div class="line"> * Brief    : </div><div class="line"> * </div><div class="line"> * Copyright (C) MICL,USTB</div><div class="line"> */</div><div class="line"> </div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cv.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;highgui.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> QUAN_VAL1          (10)</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> QUAN_VAL2          (100)</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">CreateLookupTable</span><span class="params">(Mat&amp; table, uchar quan_val)</span></span></div><div class="line">&#123;</div><div class="line">    table.create(<span class="number">1</span>,<span class="number">256</span>,CV_8UC1);</div><div class="line">	</div><div class="line">    uchar *p = table.data;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">256</span>; ++i)</div><div class="line">	&#123;</div><div class="line">		p[i] = quan_val*(i/quan_val);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></div><div class="line">&#123;</div><div class="line">    Mat img;</div><div class="line">    Mat out1;</div><div class="line">    Mat out2;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (argc &lt; <span class="number">2</span>) &#123;</div><div class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"Please input image file name."</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    img = imread(argv[<span class="number">1</span>], <span class="number">1</span>);</div><div class="line"></div><div class="line"></div><div class="line">    Mat table;</div><div class="line">    CreateLookupTable(table, QUAN_VAL1);</div><div class="line">    LUT(img, table, out1);</div><div class="line">    CreateLookupTable(table, QUAN_VAL2);</div><div class="line">    LUT(img, table, out2);  <span class="comment">// Call OpenCV function</span></div><div class="line"></div><div class="line">    namedWindow(<span class="string">"Lena"</span>, CV_WINDOW_NORMAL);</div><div class="line">    imshow(<span class="string">"Lena"</span>, img);</div><div class="line">    namedWindow(<span class="string">"QUAN_VAL=10"</span>, CV_WINDOW_NORMAL);</div><div class="line">    imshow(<span class="string">"QUAN_VAL=10"</span>, out1);</div><div class="line">    namedWindow(<span class="string">"QUAN_VAL=100"</span>, CV_WINDOW_NORMAL);</div><div class="line">    imshow(<span class="string">"QUAN_VAL=100"</span>, out2);</div><div class="line"></div><div class="line">    waitKey(<span class="number">0</span>);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li><p>为什么要使用查找表？</p>
+<p>一般的灰度图像有256个灰度级，而有时我们并不需要这么精确的灰度级（严重影响运算时间），比如黑白图像。这意味着我们以一个新的输入值划分当前的颜色空间，比如灰度到黑白色，将0~127灰度值直接赋值0，128~255赋值1，最终得到较少的黑白两色。查找表就扮演着这种降低灰度级而提高运算速度的角色。量化前和量化后的灰度值可以用下面的表达式表示：</p>
+<p><img src="http://www.forkosh.com/mathtex.cgi? \small I_{\text{new}}=\frac{I_{\text{old}}}{Q}*Q"></p>
+<p>其中Q表示量化级别，如取10，表示：灰度值1-10用灰度值1表示，灰度值11-20用灰度值11表示，以此类推！</p>
+</li>
+<li><p>使用上面公式和查找表有毛关系，当然没有，但上面公式代价就是要对图片遍历的每个灰度值都计算一次。因此，本着程序设计中的“以空间换时间”的基本算法策略，引入查找表，查找表就是将0~255个灰度值量化后的结果提前计算好存储在一个表中，上面程序中的CreateLookupTable就是完成该功能的函数。从程序中可以看出，查找表的数据结构定义为Mat类型。</p>
+</li>
+<li><p>有了查找表后，要对图像中的像素灰度值进行替换，OpenVC提供了使用查找表直接计算出量化灰度级后图像的函数——LUT，其函数原型为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">//! transforms array of numbers using a lookup table: dst(i)=lut(src(i))</div><div class="line">CV_EXPORTS_W void LUT(InputArray src, InputArray lut, OutputArray dst,</div><div class="line">                      int interpolation=0);</div></pre></td></tr></table></figure>
+<p>注意哦，我们程序中定义的查找表类型为Mat，这里LUT的输入输出参数类型怎么是InputArray和OutputArray。在OpenCV中，InputArray/OutputArray这个接口类可以是Mat、Mat<em><t>、Mat</t></em><t, m,="" n="">、vector<t>、vector<vector<t>&gt;、vector<mat>。</mat></vector<t></t></t,></p>
+<p>也就意味着当你看refman或者源代码时，如果看见函数的参数类型是InputArray/OutputArray型时，把上诉几种类型作为参数都是可以的。</p>
+<p>另外，请注意，InputArray/OutputArray只能作为函数的形参参数使用，不要试图声明一个InputArray类型的变量，OutputArray也只是InputArray的派生。还有，还有就是OutputArrayOfArrays、InputOutputArray、InputOutputArrayOfArrays都是OutputArray的别名，碰到别慌张!</p>
+</li>
+</ol>
+<h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><p><img src="../images/OpenCV基础篇之查找表/result.png" alt="result"></p>
+<p>江南好，千钟美酒，一曲满庭芳</p>
+<p>左边是原始图片；中间是量化值Q=10时的结果，信息丢失很少；右边是量化值Q=100的图片，很多信息丢失了，但也别有一番风味。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lhnows.github.io/2016/01/27/OpenCV基础篇之查找表/" data-id="cj3n2onse000bin52ewubscmy" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/01/27/OpenCV基础篇之图片叠加/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/01/27/OpenCV基础篇之绘图及RNG随机数对象/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/06/07/main-page/">main page</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/07/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/06/OpenCV基础篇之高级GUI/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/01/27/OpenCV集成到Qt的尝试-zximage/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/01/27/OpenCV图像处理篇之Hough变换/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 lhnows<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
