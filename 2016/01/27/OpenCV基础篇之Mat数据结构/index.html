@@ -5,15 +5,20 @@
   
   <title>lhnows&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="start from zero">
-<meta property="og:type" content="website">
+  <meta name="description" content="OpenCV基础篇之Mat数据结构Mat构造函数分析Mat是OpenCV最基本的数据结构，Mat即矩阵（Matrix）的缩写，Mat数据结构主要包含2部分：Header和Pointer。Header中主要包含矩阵的大小，存储方式，存储地址等信息；Pointer中存储指向像素值的指针。我们在读取图片的时候就是将图片定义为Mat类型，其重载的构造函数一大堆， 123456789101112131">
+<meta property="og:type" content="article">
 <meta property="og:title" content="lhnows&#39;s blog">
-<meta property="og:url" content="http://lhnows.github.io/index.html">
+<meta property="og:url" content="http://lhnows.github.io/2016/01/27/OpenCV基础篇之Mat数据结构/index.html">
 <meta property="og:site_name" content="lhnows&#39;s blog">
-<meta property="og:description" content="start from zero">
+<meta property="og:description" content="OpenCV基础篇之Mat数据结构Mat构造函数分析Mat是OpenCV最基本的数据结构，Mat即矩阵（Matrix）的缩写，Mat数据结构主要包含2部分：Header和Pointer。Header中主要包含矩阵的大小，存储方式，存储地址等信息；Pointer中存储指向像素值的指针。我们在读取图片的时候就是将图片定义为Mat类型，其重载的构造函数一大堆， 123456789101112131">
+<meta property="og:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV基础篇之Mat数据结构/Mat.png">
+<meta property="og:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV基础篇之Mat数据结构/single_channel.png">
+<meta property="og:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV基础篇之Mat数据结构/rgb_channel.png">
+<meta property="og:updated_time" content="2017-05-06T06:59:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="lhnows&#39;s blog">
-<meta name="twitter:description" content="start from zero">
+<meta name="twitter:description" content="OpenCV基础篇之Mat数据结构Mat构造函数分析Mat是OpenCV最基本的数据结构，Mat即矩阵（Matrix）的缩写，Mat数据结构主要包含2部分：Header和Pointer。Header中主要包含矩阵的大小，存储方式，存储地址等信息；Pointer中存储指向像素值的指针。我们在读取图片的时候就是将图片定义为Mat类型，其重载的构造函数一大堆， 123456789101112131">
+<meta name="twitter:image" content="http://lhnows.github.io/2016/01/27/images/OpenCV基础篇之Mat数据结构/Mat.png">
   
     <link rel="alternate" href="/atom.xml" title="lhnows&#39;s blog" type="application/atom+xml">
   
@@ -66,117 +71,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-main-page" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/06/07/main-page/" class="article-date">
-  <time datetime="2017-06-07T13:48:06.000Z" itemprop="datePublished">2017-06-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/07/main-page/">main page</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>你好，欢迎来到我的个人技术博客。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://lhnows.github.io/2017/06/07/main-page/" data-id="cj3n2iu810003hr529k4fcecc" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/06/07/hello-world/" class="article-date">
-  <time datetime="2017-06-07T13:38:26.000Z" itemprop="datePublished">2017-06-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/07/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://lhnows.github.io/2017/06/07/hello-world/" data-id="cj3n2iu7o0000hr52ep1zwf35" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-OpenCV基础篇之高级GUI" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/05/06/OpenCV基础篇之高级GUI/" class="article-date">
-  <time datetime="2017-05-06T07:13:36.000Z" itemprop="datePublished">2017-05-06</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="OpenCV基础篇之高级GUI"><a href="#OpenCV基础篇之高级GUI" class="headerlink" title="OpenCV基础篇之高级GUI"></a>OpenCV基础篇之高级GUI</h1><h2 id="图像窗口显示"><a href="#图像窗口显示" class="headerlink" title="图像窗口显示"></a>图像窗口显示</h2><h3 id="namedwindow函数参数含义"><a href="#namedwindow函数参数含义" class="headerlink" title="namedwindow函数参数含义"></a>namedwindow函数参数含义</h3><h3 id="如何全屏可缩放图像窗口"><a href="#如何全屏可缩放图像窗口" class="headerlink" title="如何全屏可缩放图像窗口"></a>如何全屏可缩放图像窗口</h3><h3 id="destroywindow用法"><a href="#destroywindow用法" class="headerlink" title="destroywindow用法"></a>destroywindow用法</h3><h3 id="imshow-与mfc结合"><a href="#imshow-与mfc结合" class="headerlink" title="imshow 与mfc结合"></a>imshow 与mfc结合</h3><h2 id="图像窗口的callback"><a href="#图像窗口的callback" class="headerlink" title="图像窗口的callback"></a>图像窗口的callback</h2><h3 id="鼠标callback"><a href="#鼠标callback" class="headerlink" title="鼠标callback"></a>鼠标callback</h3><h3 id="键盘callback"><a href="#键盘callback" class="headerlink" title="键盘callback"></a>键盘callback</h3>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://lhnows.github.io/2017/05/06/OpenCV基础篇之高级GUI/" data-id="cj3n2iu7z0002hr52h1ey1hub" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-OpenCV基础篇之Mat数据结构" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-OpenCV基础篇之Mat数据结构" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/01/27/OpenCV基础篇之Mat数据结构/" class="article-date">
   <time datetime="2016-01-27T10:29:30.000Z" itemprop="datePublished">2016-01-27</time>
@@ -234,10 +129,23 @@
     </footer>
   </div>
   
-</article>
-
+    
+<nav id="article-nav">
+  
+    <a href="/2017/05/06/OpenCV基础篇之高级GUI/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+</nav>
 
   
+</article>
 
 </section>
         
