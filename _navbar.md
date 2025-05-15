@@ -15,4 +15,7 @@
   * [中文](/)
   * [En](/zh-en/)
 
+* [表情包](contents/emoji)
+* [iframe](contents/iframe)
+
 	
