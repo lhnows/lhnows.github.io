@@ -8,3 +8,8 @@
 * [部署](contents/production)
 * [表情包](contents/emoji)
 * [iframe](contents/iframe)
+* **SLAM3R**
+  * [SLAM3R论文概述](contents/slam3r论文概述)
+  * [SLAM3R论文原文](contents/slam3r原文)
+  * [SLAM3R部署](contents/slam3r部署)
+  * [SLAM3R方法](contents/SLAM3R方法)
