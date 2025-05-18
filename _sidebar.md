@@ -13,4 +13,4 @@
   * [SLAM3R论文原文](contents/SLAM3R原文)
   * [SLAM3R部署](contents/SLAM3R部署)
   * [SLAM3R方法](contents/SLAM3R方法)
-* [Oblique-Merf](contents/Oblique-Merf)
+* [Oblique-Merf](contents/Oblique-MERF)
