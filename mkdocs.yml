@@ -13,6 +13,8 @@ nav:
       - 图像去雾: "research/图像去雾算法研究_.md"
       - Google MedGemma: "research/Google MedGemma.md"
       - 点云转CAD: "research/点云转CAD.md"
+      - 倾斜摄影:
+        - 单目重建: "research/倾斜摄影单目重建.md"
 
   - 项目: "about.md"
   - "license.md"
