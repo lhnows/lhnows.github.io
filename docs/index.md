@@ -2,4 +2,4 @@
 
 
 欢迎关注我的公众号
-![](assets/wechat_pub.JPG)
+![](assets/images/wechat_pub.JPG)
