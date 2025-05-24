@@ -107,3 +107,10 @@ If you use this repo or find the documentation useful for your research, please 
 ## Ackownledgements
 
 This repository's code is based on [nerfstudio](https://github.com/nerfstudio-project/nerfstudio), [MERF](https://github.com/google-research/google-research/tree/master/merf) and [City-on-Web](https://github.com/USTC3DV/MERFStudio/tree/main). We are very grateful for their outstanding work.
+
+
+## 环境配置
+
+```
+pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118
+```
