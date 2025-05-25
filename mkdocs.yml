@@ -15,6 +15,7 @@ nav:
       - 点云转CAD: "research/点云转CAD.md"
       - 倾斜摄影:
         - 单目重建: "research/倾斜摄影单目重建.md"
+      - colmap集成SuperPoint: "research/COLMAP替换SuperPoint和SuperGlue_.md"
   - 项目: 
       - MASt3R-SLAM: "projects/MASt3R-SLAM.md"
   - "license.md"
