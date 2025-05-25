@@ -16,6 +16,8 @@ nav:
       - 倾斜摄影:
         - 单目重建: "research/倾斜摄影单目重建.md"
       - colmap集成SuperPoint: "research/COLMAP替换SuperPoint和SuperGlue_.md"
+      - 口腔医学:
+        - 专家共识: "research/口腔医学/专家共识.md"
   - 项目: 
       - MASt3R-SLAM: "projects/MASt3R-SLAM.md"
   - "license.md"
