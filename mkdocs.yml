@@ -8,7 +8,7 @@ theme:
     - navigation.tabs
     - navigation.tabs.sticky
 nav:
-  - "index.md"
+  - 首页: "index.md"
   - 研报: 
       - 图像去雾: "research/图像去雾算法研究_.md"
       - Google MedGemma: "research/Google MedGemma.md"
